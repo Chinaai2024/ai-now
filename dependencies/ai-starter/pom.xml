@@ -10,12 +10,10 @@
     </parent>
 
     <artifactId>ai-starter</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-stability-ai-spring-boot-starter</artifactId>
-        </dependency>
-    </dependencies>
+    <packaging>pom</packaging>
+    <modules>
+        <module>ai-core</module>
+        <module>ai-sdk-spring-starter</module>
+    </modules>
 
 </project>

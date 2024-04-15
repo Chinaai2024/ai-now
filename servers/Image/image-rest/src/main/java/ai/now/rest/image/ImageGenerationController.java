@@ -1,10 +1,12 @@
 package ai.now.rest.image;
 
+import ai.now.client.AIClient;
+import ai.now.enums.AIProvider;
 import ai.now.rest.beans.GenerationImageRequest;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.ai.image.ImageClient;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
-import org.springframework.ai.stabilityai.StabilityAiImageClient;
 import org.springframework.ai.stabilityai.api.StabilityAiImageOptions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 
 /**
@@ -23,27 +28,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/image")
 public class ImageGenerationController {
 
-    final StabilityAiImageClient stabilityAiImageClient ;
+    final AIClient aiClient ;
 
-    public ImageGenerationController(StabilityAiImageClient stabilityAiImageClient) {
-        this.stabilityAiImageClient = stabilityAiImageClient;
+
+    public ImageGenerationController(AIClient aiClient ) {
+        this.aiClient = aiClient;
     }
 
-    @PostMapping(value = "/generation")
-    public ResponseEntity<byte[]> generation(@RequestBody GenerationImageRequest request){
+    @PostMapping(value = "/generation" , consumes = {MediaType.APPLICATION_JSON_VALUE} ,produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    public ResponseEntity<InputStream> generation(@RequestBody GenerationImageRequest request){
         try {
-            ImageResponse response = stabilityAiImageClient.call(new ImagePrompt(request.getPrompt(),
+            ImageClient client =  aiClient.getImageClient(AIProvider.STABILITY_AI) ;
+            ImageResponse response = client.call(new ImagePrompt(request.getPrompt(),
                     StabilityAiImageOptions.builder()
                             .withStylePreset("cinematic")
-                            .withN(1)
+                            .withN(request.getN())
                             .withHeight(1024)
-                            .withResponseFormat("url")
                             .withWidth(1024).build())) ;
             byte[] bytes = null ;
             if(!ObjectUtils.isEmpty(response.getResults())){
                 bytes = Base64.decodeBase64(response.getResults().get(0).getOutput().getB64Json()) ;
+                return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(new ByteArrayInputStream(bytes)) ;
             }
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(bytes) ;
+            return ResponseEntity.ok().build() ;
         } catch (Exception e) {
             e.printStackTrace();
         }

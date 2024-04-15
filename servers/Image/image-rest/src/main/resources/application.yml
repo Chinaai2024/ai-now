@@ -1,4 +1,8 @@
+server:
+  port: 8081
 spring:
   ai:
     stabilityai:
       api-key: sk-loLpxo5DwFxK6or0TalIHmcZH3fbBDD31m8BV8d8Er3ro8NN
+    openai:
+      api-key: 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

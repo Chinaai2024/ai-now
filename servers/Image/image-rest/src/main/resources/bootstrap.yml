@@ -1,5 +1,3 @@
 spring:
   application:
     name: image-ai
-server:
-  port: 8080
