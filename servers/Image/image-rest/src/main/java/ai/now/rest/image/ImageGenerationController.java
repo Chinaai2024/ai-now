@@ -38,7 +38,7 @@ public class ImageGenerationController {
     @PostMapping(value = "/generation" , consumes = {MediaType.APPLICATION_JSON_VALUE} ,produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<InputStream> generation(@RequestBody GenerationImageRequest request){
         try {
-            ImageClient client =  aiClient.getImageClient(AIProvider.STABILITY_AI) ;
+            ImageClient client =  aiClient.getImageClient(request.getProvider()) ;
             ImageResponse response = client.call(new ImagePrompt(request.getPrompt(),
                     StabilityAiImageOptions.builder()
                             .withStylePreset("cinematic")

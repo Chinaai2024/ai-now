@@ -1,5 +1,6 @@
 package ai.now.rest.beans;
 
+import ai.now.enums.AIProvider;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,4 +13,5 @@ import java.io.Serializable;
 public class GenerationImageRequest implements Serializable {
     private String prompt ;
     private int n = 1 ;
+    private AIProvider provider = AIProvider.STABILITY_AI ;
 }
