@@ -3,10 +3,8 @@ server:
 spring:
   application:
     name: image-ai
-  profiles:
-    active: @profile@
   ai:
     stabilityai:
-      api-key: @stability.ai.apiKey@
+      api-key: ${StabilityAIKEY}
     openai:
-      api-key: @open.ai.apiKey@
+      api-key: ${OpenAIKey}

@@ -26,6 +26,7 @@
 
         <!-- 开源组件库 -->
         <lombok.version>1.18.32</lombok.version>
+
     </properties>
 
     <modules>
@@ -72,19 +73,4 @@
             </releases>
         </repository>
     </repositories>
-
-    <profiles>
-        <profile>
-            <id>master</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <profile>master</profile>
-                <open.ai.apiKey>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</open.ai.apiKey>
-                <stability.ai.apiKey>sk-loLpxo5DwFxK6or0TalIHmcZH3fbBDD31m8BV8d8Er3ro8NN</stability.ai.apiKey>
-            </properties>
-        </profile>
-    </profiles>
-
 </project>
