@@ -5,6 +5,6 @@ spring:
     name: image-ai
   ai:
     stabilityai:
-      api-key: ${StabilityAIKEY:}
+      api-key: ${StabilityAIKEY}
     openai:
-      api-key: ${OpenAIKey:}
+      api-key: ${OpenAIKey}
