@@ -1,8 +1,12 @@
 server:
   port: 8080
 spring:
+  application:
+    name: image-ai
+  profiles:
+    active: @profile@
   ai:
     stabilityai:
-      api-key: sk-loLpxo5DwFxK6or0TalIHmcZH3fbBDD31m8BV8d8Er3ro8NN
+      api-key: @stability.ai.apiKey@
     openai:
-      api-key: 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
+      api-key: @open.ai.apiKey@
